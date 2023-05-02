@@ -1,1 +1,56 @@
 
+#include <iostream>
+#include <vector>
+#include <stack>
+
+using namespace std;
+
+// Guardo la fruta en cajones de 20kg
+
+ class Cajon()
+{
+    
+    private:
+     
+    const int cantidadMaxima;
+    const int frutaMaxima;
+    int cajones;
+    int cantidadDeFruta;
+    vector<Fruta> listaFrutas(20, Fruta("Nombre")); 
+    
+    
+     
+    public:
+    
+     Cajon(){
+         
+        cantidadMaxima = 10;
+        frutaMaxima = 20;
+        cajones = 0;    
+        cantidadDeFruta = 0;
+        Fruta fruta = new Fruta("n");
+     }
+
+  //LLeno los cajones con 20kg de listaFrutas
+  
+    void setCajon(){
+       
+       for(int i=0 ; cantidadDeFruta <= frutaMaxima; i++){
+            listaFrutas[i] = fruta.setFruta();
+            cantidadDeFruta++;
+       }
+       addCajon();
+       
+    }
+  
+  //contador de cajones  
+    void addCajon(){
+        cajones++;    
+    }
+    
+    
+    int cantidadCajon(){
+        return cajones;
+    }
+    
+}
