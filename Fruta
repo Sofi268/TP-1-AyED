@@ -1,8 +1,13 @@
 
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <string>
 
 using namespace std;
+
+//Descripcion del objeto fruta y sus 3 posibilidades jeje
 
  class Fruta()
 {
@@ -12,6 +17,7 @@ using namespace std;
      string nombre;
      cont int peso;
      const int cantidadMaxima;   
+     vector<string> tipos = {"Banana", "Frutilla", "Mandarina"};
      
      
     public:
@@ -24,13 +30,29 @@ using namespace std;
          
      }
 
-    
+ // cambiar el nombre de cualquier fruta (random con 3 posibilidades)
     void setFruta(){
+       
+       this.nombre = frutasRandom();
        
     }
     
     
+// elijo un tipo de fruta random
+
+    string frutasRandom(){
+        
+        srand(time(0)); // Inicializa el generador de números aleatorios con la hora actual (semilla)
+
+        for(int i=0; i<3; i++) { // Repite tres veces para generar tres nombres aleatorios
+            int index = rand() % tipos.size(); // Selecciona un índice aleatorio de la lista de nombres
+            string tipos = tipos[index]; // Obtiene el nombre correspondiente al índice seleccionado
+            cout << tipos << endl; // Imprime el nombre seleccionado
+        }
+    
+        return tipos;
+     }
+    
+    
 }
 
-
-vector<Fruta> listaFrutas(200, Fruta("Nombre", 0));
