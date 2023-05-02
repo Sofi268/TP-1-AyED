@@ -1,1 +1,17 @@
+//FUNCION PRINCIPAL:
+int main(){
+    int tiposDeFrutas;
+     
+    cout<<"Cuantas tipos de fruta hay? ";cin>>tiposDeFrutas;cout<<endl;
+    Fruta Frutas[tiposDeFrutas]={Fruta()}; //SE CREAN LOS OBJETOS
 
+    for(int i=0;i<tiposDeFrutas;i++){
+            cout<<"["<<i<<"]"<<" La cantidad de "<< Frutas[i].getFruta() <<" Es de "
+            <<Frutas[i].getCantFruta()<<" KG."<<endl;}
+    
+    
+    
+//system("pause");
+}
+
+//FUNCIONES
