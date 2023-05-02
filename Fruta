@@ -1,1 +1,36 @@
 
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+ class Fruta()
+{
+    
+    private:
+     
+     string nombre;
+     cont int peso;
+     const int cantidadMaxima;   
+     
+     
+    public:
+    
+     Fruta(string n){
+         
+         nombre = n;
+         cantidadMaxima = 200;
+         peso = 1;
+         
+     }
+
+    
+    void setFruta(){
+       
+    }
+    
+    
+}
+
+
+vector<Fruta> listaFrutas(200, Fruta("Nombre", 0));
