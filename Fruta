@@ -1,58 +1,81 @@
-
 #include <iostream>
+#include <sstream>
+#include <stdlib.h>
 #include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <string>
-
 using namespace std;
 
-//Descripcion del objeto fruta y sus 3 posibilidades jeje
+class Fruta{
+public:
+    //CONSTRUCTOR-DESTRUCTOR
+    Fruta();
+    ~Fruta();
+    //SETTERS
+    void setFruta(string);
+    void setCantFruta(int);
+    
+    //GETTERS
+    string getFruta();
+    int getCantFruta();
+    //FUNCIONES
+    void disminuirFruta();
+    void disminuirFruta_Cajon();
+    void aumentarFruta();
 
- class Fruta()
-{
-    
-    private:
-     
-     string nombre;
-     cont int peso;
-     const int cantidadMaxima;   
-     vector<string> tipos = {"Banana", "Frutilla", "Mandarina"};
-     
-     
-    public:
-    
-     Fruta(string n){
-         
-         nombre = n;
-         cantidadMaxima = 200;
-         peso = 1;
-         
-     }
+private:
+int PESO=0,CANTIDAD=0;
+const int PESO_MAX=200;
+string NOMBRE;
 
- // cambiar el nombre de cualquier fruta (random con 3 posibilidades)
-    void setFruta(){
-       
-       this.nombre = frutasRandom();
-       
-    }
-    
-    
-// elijo un tipo de fruta random
-
-    string frutasRandom(){
-        
-        srand(time(0)); // Inicializa el generador de números aleatorios con la hora actual (semilla)
-
-        for(int i=0; i<3; i++) { // Repite tres veces para generar tres nombres aleatorios
-            int index = rand() % tipos.size(); // Selecciona un índice aleatorio de la lista de nombres
-            string tipos = tipos[index]; // Obtiene el nombre correspondiente al índice seleccionado
-            cout << tipos << endl; // Imprime el nombre seleccionado
-        }
-    
-        return tipos;
-     }
-    
-    
+};
+//CONSTRUCTOR-DESTRUCTOR    
+Fruta::Fruta(){
+    string nombre;int cantidad=0;
+    cout<<"Ingresar la fruta: ";cin>>nombre;
+    cout<<"Ingresar la cantidad de Fruta en kg: ";cin>>cantidad;cout<<endl;
+    setFruta(nombre);setCantFruta(cantidad);
 }
+Fruta::~Fruta(){cout<<"\nDestructor";}
+//SETTERS
+void Fruta::setFruta(string nombre){NOMBRE=nombre;}
+void Fruta::setCantFruta(int cant){
+    int n;
+    if(cant<=PESO_MAX&&cant>0){CANTIDAD=cant;}
+    else{
+        cout<<"La cantidad de fruta no debe ser superior a 200KG.\nIngresar nuevo valor: "; cin>>n;
+        setCantFruta(n);}
+    }
 
+//GETTERS
+    string  Fruta::getFruta(){return NOMBRE;}
+    int Fruta::getCantFruta(){return CANTIDAD;}
+
+
+//FUNCIONES:
+void Fruta::disminuirFruta_Cajon(){
+int aux,cajones;
+cout<<"Cuantos cajones se vendieron? "; cin>>cajones;
+aux=CANTIDAD-20*cajones;
+if(aux==0){CANTIDAD=aux; cout<<"\nEXISTENCIAS VACIAS, REPONER"<<endl;}
+else if(aux<0)cout<<"\nENTREGA PENDIENTE, REPONER"<<endl;
+else CANTIDAD=aux;
+}
+void Fruta::aumentarFruta(){
+    int cant, aux; 
+    cout<<"Cuantos kg se compraron?: ";cin>>cant;
+    aux=CANTIDAD+cant;
+    if(aux<=200) CANTIDAD=aux;
+    else{
+        cout<<"El total almacenable no puede ser superior a 200KG"<<endl;
+        aumentarFruta();
+    }
+
+}
+void Fruta::disminuirFruta(){
+    int aux,kgFruta;
+    cout<<"Cuantos kg de fruta se vendieron? "; cin>>kgFruta;
+    aux=CANTIDAD-kgFruta;
+    if(aux==0){CANTIDAD=aux; cout<<"\nEXISTENCIAS VACIAS, REPONER"<<endl;}
+    else if(aux<0)cout<<"\nENTREGA PENDIENTE, REPONER"<<endl;
+    else CANTIDAD=aux;
+
+}
