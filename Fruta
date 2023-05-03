@@ -46,4 +46,5 @@ class Fruta {
         //GETTERS
         string getFruta(){return NOMBRE;}
         int getCantFruta(){return CANTIDAD;}
+        int getCantidadTotalActual(){return CANTIDAD_ACTUAL;}
 };
