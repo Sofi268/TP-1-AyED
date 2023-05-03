@@ -1,1 +1,245 @@
+#include <iostream>
+#include <sstream>
+#include <stdlib.h>
+#include <vector>
+#include <queue>
+#include <cstring>
+#define MAX 4
+#include <cstdlib>
+using namespace std;
 
+//**************
+    class Pedido{
+public:
+    //CONSTRUCTOR-DESTRUCTOR
+    Pedido();
+    ~Pedido();
+    
+    
+    //SETTERS
+    void setCliente(string);
+    void setTipoFruta(string); //ver nombre de clase Fruta
+    void setcantidadFruta(int);
+    void settipoDeVenta(bool); //true mayorista
+    void setListo(bool); //pedido entregado
+   
+    //GETTERS
+    string getCliente();
+    string getTipoFruta(); 
+    int getcantidadFruta();
+    bool getEsMayorista(); 
+    bool getListo(); 
+    
+
+
+
+private:
+    string TIPO;
+    string NOMBRE;
+    int CANTIDAD = 0;
+    bool TIPO_VENTA = true;
+    bool LISTO = false;
+    };
+//CONSTRUCTOR-DESTRUCTOR    
+Pedido::Pedido(){
+    string nombre;int cantidad=0;string tipoF; bool tipoV; 
+    cout<<"Ingresar el nombre del cliente: ";cin>>nombre;
+    cout<<"Ingresar 1 si es mayorista, 0 si es minorista: ";cin>>tipoV;
+    
+    if(tipoV == true){
+        cout << "Ingrese la cantidad de cajones de 20kg que necesita: "; cin>> cantidad;
+      cantidad = 20*cantidad;
+        
+        cout << "cantidad ingresada: " << cantidad << "Kg " << endl;
+    }
+    else{
+        cout << "Ingrese la cantidad de fruta en Kg: "; cin >>cantidad;
+      
+        
+    }
+    cout<<"Ingresar el tipo de fruta: ";cin>>tipoF; cout << endl;//ver como comparar para ver si es valido
+    string setCliente(nombre);
+    bool setesMayorista(tipoV); 
+    string setTipoFruta(tipoF); 
+    
+};
+
+Pedido::~Pedido(){cout<<"\nDestructor";}
+//SETTERS
+void Pedido::setCliente(string nombre){NOMBRE=nombre;}
+void Pedido::settipoDeVenta(bool tipoV){TIPO_VENTA=tipoV;}
+void Pedido::setcantidadFruta(int cantidad){CANTIDAD=cantidad;}
+void Pedido::setTipoFruta(string tipoF){
+    
+    
+    
+    
+    TIPO=tipoF;} //deberia verificar si el tipo es valido llamando a otra clase
+//GETTERS
+    string Pedido::getCliente(){return NOMBRE;}
+    int Pedido::getcantidadFruta(){return CANTIDAD;}
+    bool Pedido::getEsMayorista(){return TIPO_VENTA;}
+    string Pedido::getTipoFruta(){return TIPO;}
+
+//*************** FIN CLASE PEDIDO ****************
+
+ class GestorDePedidos:public Pedido{
+    public:
+   
+    //CONSTRUCTOR
+    GestorDePedidos();
+    ~GestorDePedidos();
+    
+    //SETTERS
+    
+
+    //GETTERS
+    int getID();
+    int getCantFruta();
+    string getTipoFruta();
+    bool getLleno();
+    
+    //FUNCIONES
+     
+    void setesMayorista();
+    void setentregados();
+    void listaPedidos(Pedido* copiaPedidos, int cantidadDePedidos);
+
+   
+   
+   
+    private:
+     int CANTIDADMAYORISTAS;
+     int CANTIDADMINORISTA;
+    };
+    
+    //CONSTRUCTOR
+    GestorDePedidos::GestorDePedidos():Pedido(){
+    
+       CANTIDADMINORISTA = 0;
+       CANTIDADMAYORISTAS = 0;
+       
+    
+        }
+    GestorDePedidos::~GestorDePedidos(){}
+    //SETTERS
+
+
+    //GETTERS
+    
+    
+    
+    //FUNCIONES
+    void GestorDePedidos::setesMayorista(){
+        
+        Cola cola_mayorista ={Cola()};
+        Cola cola_minorista ={Cola()};
+        
+         
+         
+         for(int i=0 ; i<cabtidadDePedidos ; i++)
+        { 
+            if(getEsMayorista() == true){
+               //mayorista    
+               cola_mayorista.encolar(copiaPedidos[i]);
+            
+                
+            }else{
+                //Minoristas
+                
+                cola_minorista.encolar(copiaPedidos[i]);
+            }
+        }   
+    }
+    void GestorDePedidos::setentregados(){
+        
+        int numero de pedidos;
+            
+        cout << "cuantos pedidos quiere entregar? " ; cin >> numerodepedidos; cout << endl;
+        
+        
+        
+    }
+
+ 
+  void GestorDePedidos::listaPedidos(Pedido* copiaPedidos, int cantidadDePedidos) {
+    Pedido pedidos[cantidadDePedidos];
+    memcpy(pedidos, copiaPedidos, cantidadDePedidos * sizeof(Pedido));
+    // Aquí puedes utilizar el array "pedidos" como copia del array "copiaPedidos"
+}
+
+
+
+//************FIN CLASE GestorDePedidos******************************
+
+template <class T> class Cola {
+    
+    private:
+        T Q[MAX];
+        int pi, pf;
+        
+    public:
+        Cola(void) { pi = 0; pf = MAX - 1; };
+        ~Cola(void);
+        T tope() { return Q[pi]; };
+        bool colavacia() { return pi == (pf + 1) % MAX; };
+        bool colallena() { return pi == (pf + 2) % MAX; };
+        void encolar(T a);
+        void desencolar();
+        T ultimo();
+        string imprimir(string s);
+};
+
+//FUNCIONES
+
+template <class T> void Cola<T>::encolar(T a)
+{
+    if (!colallena()) {
+        //if (pf == MAX - 2) pf = MAX - 1;
+        pf = (pf + 1) % MAX;
+        Q[pf] = a;
+    }
+    else cout << "Cola llena" << endl;
+}
+
+template <class T> void Cola<T>::desencolar(void)
+{
+    if (!colavacia())pi = (pi + 1) % MAX;
+    else cout << "Cola vacia" << endl;
+}
+
+template <class T> T Cola<T>::ultimo(void)
+{
+    return Q[pf];
+}
+template <class T> string Cola<T>::imprimir(string s)
+{
+    if (!colavacia()) {
+       for (int i = pi; i != (pf + 1) % MAX; i = (i + 1) % MAX)
+            cout << Q[i] << "--";
+    }
+
+    return " <<< Q";
+}
+
+//***************FIN CLASE COLA************************
+
+
+int main(){
+    int cantidadDePedidos;
+    
+ cout << "Ingrese la cantidad de pedidos del día: " ; cin >> cantidadDePedidos ; cout<<endl;
+ Pedido pedidos[cantidadDePedidos]={Pedido()};
+ 
+    for(int i=0;i<cantidadDePedidos;i++){
+           cout << endl;
+    
+    }
+
+ GestorDePedidos gestor;
+gestor.listaPedidos(pedidos, cantidadDePedidos);
+
+ cout << "Pedidos Mayoristas: " << endl;
+ cout << "Pedidos Minoristas: "<< endl;
+
+}
