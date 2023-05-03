@@ -31,10 +31,11 @@ class Cajon: public Fruta{
             LLENO = false;
          }
          //Setters
+         void setTipoFruta(string s);
          void setCajonesDisponibles();
          void setID(int i);
          //Getters
-         
+         string getTipoFruta();
          //Funciones
          void comprobarEspacioLibre(Fruta f);         
          void agregarFruta(Fruta f);
@@ -51,11 +52,18 @@ void Cajon::setCajonesDisponibles(){
 void Cajon::setID(int i){
     ID = i;
 }
+void Cajon::setTipoFruta(string s){
+    TIPO_FRUTA = s;    
+}
+string Cajon::getTipoFruta(){
+    return TIPO_FRUTA;
+}
 void Cajon::agregarFruta(Fruta f){
     Nodo<Fruta>* nueva = new Nodo<Fruta>(f);
     nueva->setnext(czo);
     czo = nueva;
     CANT_FRUTA++;
+    setTipoFruta(f.getFruta());
     if(CANT_FRUTA == 20){LLENO = true;}        
 }
 void Cajon::comprobarEspacioLibre(Fruta f){
@@ -67,7 +75,7 @@ bool Cajon::EstaLleno(){
         return LLENO;
 }
 
-// void Cajon::divCajones(Fruta f){
+ void Cajon::divCajones(Fruta f){
 //     int cajones,n,residual; 
 //     int n = f.getCantFruta();
 //     if(n>20){
@@ -84,4 +92,4 @@ bool Cajon::EstaLleno(){
 //     }
 //         cout<<"Cajones Necesarios: "<<cajones<<" + residual"<<n;
 
-//     }
+     }
