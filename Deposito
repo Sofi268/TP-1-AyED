@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
+#include <sstream>
 
+#define MAX 10
 using namespace std;
 
 template <class T> class Pila {
@@ -15,25 +17,27 @@ public:
     bool pilavacia() { return p == -1; };
 };
 
-class Deposito(){
-	
+class Deposito{
+	private:
 	int cantidadCajones;
 	Pila<Cajon>*pila1, *pila2, *pila3;
-	int const MAX_APILADO = 9;
 	
-    Deposito(){
+	public:
+    Deposito(int cajones){
 		pila1 = new Pila<Cajon>(); 
 		pila2 = new Pila<Cajon>(); 
 		pila3 = new Pila<Cajon>();
-		}
 		
-	cout << "Ingrese cantidad de cajones: "; 
-	cin >> cantidadCajones;
-	cout << "Cantidad de cajones ingresados: "<<cantidadCajones;
+		if(cajones<=10){
+		int cantidadCajones = cajones;
+	}else{
+		cout<<"La cantidad maxima permitida es 10";
+	}
+	}
 	
 	void apilarCajones(){
 	if(getTipoFruta()== "banana"){
-		if(getEstadoCajon()){
+		if(getEstadoCajon()){ //devuelve true si esta lleno
 	      for(int i=0; i<cantidadCajones;i++){
 		    Cajon cajon = new Cajon();
 		    pila1->apilar(cajon);
@@ -64,7 +68,39 @@ class Deposito(){
     	    Cajon cajon = new Cajon();
 		    pila3->apilar(cajon);
         }
-    }
-}
-  
+    } 
+  }
+    void desapilarCajones(){
+   	    if(getTipoFruta()== "banana"){
+		if(getEstadoCajon()){
+	      }
+        }else{
+    	   for(int i=0; i<cantidadCajones;i++){
+		    Cajon cajon = new Cajon();
+		    pila1->desapilar(cajon);
+           }
+        }
+        if(getTipoFruta()== "mandarina"){
+		if(getEstadoCajon()){
+	      }
+        }else{
+    	   for(int i=0; i<cantidadCajones;i++){
+		    Cajon cajon = new Cajon();
+		    pila1->desapilar(cajon);
+           }
+        }
+        if(getTipoFruta()== "frutilla"){
+		if(getEstadoCajon()){
+	      }
+        }else{
+    	   for(int i=0; i<cantidadCajones;i++){
+		    Cajon cajon = new Cajon();
+		    pila1->desapilar(cajon);
+           }
+        }
+   }
 };
+
+int main(){
+	Deposito d = new Deposito(10);
+}
