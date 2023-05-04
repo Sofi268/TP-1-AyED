@@ -4,6 +4,7 @@
 
 using namespace std;
 
+
 template<class Fruta> class Nodo{
     private:
         Fruta fruta;
@@ -13,7 +14,7 @@ template<class Fruta> class Nodo{
         Nodo(Fruta m){fruta = m; next = NULL;};
         void setFruta(Fruta a){fruta = a; };
         void set_next(Nodo* n) { next = n; };
-        Fruta get_fruta() { return dato; };
+        Fruta get_fruta() { return fruta; };
         Nodo* get_next() { return next; };
         bool es_vacio() { return next == NULL; }
 
@@ -65,7 +66,7 @@ template <class Fruta> void Cajon<Fruta>::setTipoFruta(string s){
 template <class Fruta> void Cajon<Fruta>::setCajonLleno(){
     LLENO = true;
 }
-template <class Fruta> void Cajon<Fruta>::setCajonLleno(){
+template <class Fruta> void Cajon<Fruta>::setCajonVacio(){
     LLENO = false;
 }
 
@@ -80,7 +81,7 @@ template <class Fruta> void Cajon<Fruta>::setCantFrutaCajon(){
     }
 }
 
-string Cajon<Fruta>::getTipoFruta(){
+template <class Fruta> string Cajon<Fruta>::getTipoFruta(){
     return TIPO_FRUTA;
 }
 
@@ -107,7 +108,7 @@ template <class Fruta> void Cajon<Fruta>::eliminarNodo(void)
     if (!this->esvacia()) {
         Nodo<Fruta>* aux = czo;
         czo = czo->get_next();
-        delete ;
+        delete aux;
     }
 }
 template <class Fruta> bool Cajon<Fruta> ::esvacia(void)
@@ -128,16 +129,15 @@ template <class Fruta> int Cajon<Fruta>::llenarCajon(Fruta f){
 template <class Fruta> int Cajon<Fruta>::vaciarCajon(Fruta f){
     int g = f.getCantFruta();
     int a1=getCantidadFrutaCajon();
-    int r;
     while(a1>0&&g>0){
-        borrarNodo();
+        eliminarNodo();
         g--;
         a1--;
     }
     if(a1==0){setCajonVacio();}
     return g;
 }
-Cajon<Fruta>* Cajon<Fruta>::restoCajon(void)
+template <class Fruta> Cajon<Fruta>* Cajon<Fruta>::restoCajon(void)
 {
     Cajon* c = new Cajon(czo->get_next());
     return (c);
