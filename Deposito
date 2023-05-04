@@ -1,1 +1,70 @@
+#include <iostream>
+#include <cstdlib>
 
+using namespace std;
+
+template <class T> class Pila {
+private:
+    T d[MAX];
+    int p;
+public:
+    Pila() { p = -1; };
+    void apilar(T x) { d[++p] = x; };
+    T tope(void) { return d[p]; };
+    void desapilar(void) { p--; };
+    bool pilavacia() { return p == -1; };
+};
+
+class Deposito(){
+	
+	int cantidadCajones;
+	Pila<Cajon>*pila1, *pila2, *pila3;
+	int const MAX_APILADO = 9;
+	
+    Deposito(){
+		pila1 = new Pila<Cajon>(); 
+		pila2 = new Pila<Cajon>(); 
+		pila3 = new Pila<Cajon>();
+		}
+		
+	cout << "Ingrese cantidad de cajones: "; 
+	cin >> cantidadCajones;
+	cout << "Cantidad de cajones ingresados: "<<cantidadCajones;
+	
+	void apilarCajones(){
+	if(getTipoFruta()== "banana"){
+		if(getEstadoCajon()){
+	      for(int i=0; i<cantidadCajones;i++){
+		    Cajon cajon = new Cajon();
+		    pila1->apilar(cajon);
+	      }
+        }else{
+    	    Cajon cajon = new Cajon();
+		    pila1->apilar(cajon);
+        }
+    }
+    if(getTipoFruta()== "frutilla"){
+		if(getEstadoCajon()){
+	      for(int i=0; i<cantidadCajones;i++){
+		    Cajon cajon = new Cajon();
+		    pila2->apilar(cajon);
+	      }
+        }else{
+    	    Cajon cajon = new Cajon();
+		    pila2->apilar(cajon);
+        }
+    }
+    if(getTipoFruta()== "mandarina"){
+		if(getEstadoCajon()){
+	      for(int i=0; i<cantidadCajones;i++){
+		    Cajon cajon = new Cajon();
+		    pila3->apilar(cajon);
+	      }
+        }else{
+    	    Cajon cajon = new Cajon();
+		    pila3->apilar(cajon);
+        }
+    }
+}
+  
+};
