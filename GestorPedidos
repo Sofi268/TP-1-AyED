@@ -1,15 +1,11 @@
+#include <cstdlib>
 #include <iostream>
 #include <sstream>
-#include <stdlib.h>
-#include <vector>
-#include <queue>
-#include <cstring>
-#define MAX 4
-#include <cstdlib>
+#include <string>
 using namespace std;
 
-//**************
-    class Pedido{
+////////////// INICIO CLASE PEDIDO ///////////////
+    class Pedido : Fruta {
 public:
     //CONSTRUCTOR-DESTRUCTOR
     Pedido();
@@ -30,7 +26,9 @@ public:
     bool getEsMayorista(); 
     bool getListo(); 
     
-
+   //FUNCIONES
+   
+   void imprimirPedido();
 
 
 private:
@@ -38,208 +36,230 @@ private:
     string NOMBRE;
     int CANTIDAD = 0;
     bool TIPO_VENTA = true;
-    bool LISTO = false;
+   
     };
+    
 //CONSTRUCTOR-DESTRUCTOR    
-Pedido::Pedido(){
-    string nombre;int cantidad=0;string tipoF; bool tipoV; 
-    cout<<"Ingresar el nombre del cliente: ";cin>>nombre;
-    cout<<"Ingresar 1 si es mayorista, 0 si es minorista: ";cin>>tipoV;
-    
-    if(tipoV == true){
-        cout << "Ingrese la cantidad de cajones de 20kg que necesita: "; cin>> cantidad;
-      cantidad = 20*cantidad;
-        
-        cout << "cantidad ingresada: " << cantidad << "Kg " << endl;
-    }
-    else{
-        cout << "Ingrese la cantidad de fruta en Kg: "; cin >>cantidad;
-      
-        
-    }
-    cout<<"Ingresar el tipo de fruta: ";cin>>tipoF; cout << endl;//ver como comparar para ver si es valido
-    string setCliente(nombre);
-    bool setesMayorista(tipoV); 
-    string setTipoFruta(tipoF); 
-    
-};
+Pedido::Pedido(string nombre, string tipoFruta, int cantidad, bool tipoVenta){ TIPO = tipoFruta , NOMBRE = nombre , CANTIDAD = cantidad , TIPO_VENTA = tipoVenta};
 
 Pedido::~Pedido(){cout<<"\nDestructor";}
 //SETTERS
 void Pedido::setCliente(string nombre){NOMBRE=nombre;}
 void Pedido::settipoDeVenta(bool tipoV){TIPO_VENTA=tipoV;}
 void Pedido::setcantidadFruta(int cantidad){CANTIDAD=cantidad;}
-void Pedido::setTipoFruta(string tipoF){
-    
-    
-    
-    
-    TIPO=tipoF;} //deberia verificar si el tipo es valido llamando a otra clase
+
+} 
 //GETTERS
     string Pedido::getCliente(){return NOMBRE;}
     int Pedido::getcantidadFruta(){return CANTIDAD;}
     bool Pedido::getEsMayorista(){return TIPO_VENTA;}
     string Pedido::getTipoFruta(){return TIPO;}
 
-//*************** FIN CLASE PEDIDO ****************
+
+void Pedido::imprimirPedido(){
+    
+    if(TIPO_VENTA == true){
+        
+        cout<< "Nombre del cliente: " << NOMBRE << " - Fruta: " << TIPO << " - Cantidad: " << CANTIDAD << " de cajones."  << endl;
+        
+    }else{
+        
+        cout<< "Nombre del cliente: " << NOMBRE << " - Fruta: " << TIPO << " - Cantidad: " << CANTIDAD << " de kilos."  << endl;
+    }
+    
+    
+}
+
+//*************** FIN CLASE PEDIDO ************************
+
+//////////// INICIO CLASE GESTOR DE PEDIDOS ///////////////
 
  class GestorDePedidos:public Pedido{
+   
     public:
    
     //CONSTRUCTOR
     GestorDePedidos();
     ~GestorDePedidos();
     
-    //SETTERS
-    
-
-    //GETTERS
-    int getID();
-    int getCantFruta();
-    string getTipoFruta();
-    bool getLleno();
-    
+  
     //FUNCIONES
      
-    void setesMayorista();
-    void setentregados();
-    void listaPedidos(Pedido* copiaPedidos, int cantidadDePedidos);
+    void gestion_Mayorista();
+    void gestion_minorista();
+    void gestor(bool);
+   
 
-   
-   
-   
     private:
-     int CANTIDADMAYORISTAS;
-     int CANTIDADMINORISTA;
+     
+     Stock *STOCK;
+     ColaGestorDePedidos *COLA_PEDIDOS;
+    
     };
     
     //CONSTRUCTOR
-    GestorDePedidos::GestorDePedidos():Pedido(){
-    
-       CANTIDADMINORISTA = 0;
-       CANTIDADMAYORISTAS = 0;
-       
-    
-        }
+    GestorDePedidos::GestorDePedidos(Stock *stock , ColaGestorDePedidos *cola_pedidos){
+            
+        STOCK = stock;
+        COLA_PEDIDOS = cola_pedidos;
+    }
     GestorDePedidos::~GestorDePedidos(){}
-    //SETTERS
-
-
-    //GETTERS
-    
-    
+  
     
     //FUNCIONES
-    void GestorDePedidos::setesMayorista(){
-        
-        Cola cola_mayorista ={Cola()};
-        Cola cola_minorista ={Cola()};
-        
-         
-         
-         for(int i=0 ; i<cabtidadDePedidos ; i++)
-        { 
-            if(getEsMayorista() == true){
-               //mayorista    
-               cola_mayorista.encolar(copiaPedidos[i]);
-            
-                
-            }else{
-                //Minoristas
-                
-                cola_minorista.encolar(copiaPedidos[i]);
-            }
-        }   
+    void GestorDePedidos::gestion_Mayorista(){
+        Pedido *aux2  = COLA_PEDIDOS->get_colaMayorista()->tope();
+	int fruta = 0;
+	
+	//le asigno numeros a las frutas para ver cual es la que necesito para sacar de stock 
+	if(aux2->getTipoFruta() == "Banana"){fruta = 1;} 
+	if(aux2->getTipoFruta() == "Frutilla"){fruta = 2;}
+	if(aux2->getTipoFruta() == "Mandarina"){fruta = 3;}
+      
+      if(STOCK->metodo para vero la Cantidad de frutas > aux2->getcantidadFruta()){
+          cout<<"-Realizo venta mayorista-" << endl ;
+          //saco la fruta de stock
+      }else{//si no me alcanza la fruta que tengo en stock lo mando a pendientes
+      
+            cout << "La cantidad solicitada no esta disponible, estara en espera" << endl;M
+            COLA_PEDIDOS->agregarPedidoPendiente(aux2);
+      }
+  
     }
-    void GestorDePedidos::setentregados(){
-        
-        int numero de pedidos;
-            
-        cout << "cuantos pedidos quiere entregar? " ; cin >> numerodepedidos; cout << endl;
-        
-        
-        
+    
+    void GestorDePedidos::gestion_minorista(){
+      	Pedido *aux2  = COLA_PEDIDOS->get_colaMinorista()->tope();
+	int fruta = 0;
+	
+	//le asigno numeros a las frutas para ver cual es la que necesito para sacar de stock 
+	if(aux2->getTipoFruta() == "Banana"){fruta = 1;} 
+	if(aux2->getTipoFruta() == "Frutilla"){fruta = 2;}
+	if(aux2->getTipoFruta() == "Mandarina"){fruta = 3;}
+      
+      if(STOCK->metodo para vero la Cantidad de frutas > aux2->getcantidadFruta()){
+          cout<<"-Realizo venta minorista-" << endl ;
+          //saco la fruta de stock
+      }else{//si no me alcanza la fruta que tengo en stock lo mando a pendientes
+      
+            cout << "La cantidad solicitada no esta disponible, estara en espera" << endl;M
+            COLA_PEDIDOS->agregarPedidoPendiente(aux2);
+      }
+      
     }
 
+    void GestorDePedidos::gestion(){
+      
+    }
  
-  void GestorDePedidos::listaPedidos(Pedido* copiaPedidos, int cantidadDePedidos) {
-    Pedido pedidos[cantidadDePedidos];
-    memcpy(pedidos, copiaPedidos, cantidadDePedidos * sizeof(Pedido));
-    // Aquí puedes utilizar el array "pedidos" como copia del array "copiaPedidos"
-}
+
 
 
 
 //************FIN CLASE GestorDePedidos******************************
 
-template <class T> class Cola {
-    
-    private:
-        T Q[MAX];
-        int pi, pf;
-        
-    public:
-        Cola(void) { pi = 0; pf = MAX - 1; };
-        ~Cola(void);
-        T tope() { return Q[pi]; };
-        bool colavacia() { return pi == (pf + 1) % MAX; };
-        bool colallena() { return pi == (pf + 2) % MAX; };
-        void encolar(T a);
-        void desencolar();
-        T ultimo();
-        string imprimir(string s);
+//////////// INICIO CLASE COLA PARA GESTIONAR PEDIDOS ///////////////
+class ColaGestorDePedidos{
+	private:
+		Cola<Pedido*> *colaMayorista;
+		Cola<Pedido*> *colaMinorista;
+		Cola<Pedido*> *pendiente; //no hay stock
+	
+	public:
+		//Constructor
+		ColaPedido(){colaMayorista = new Cola<Pedido*>(); colaMinorista = new Cola<Pedido*>(); pendiente = new Cola<Pedido*>();}
+		ColaPedido(Pedido *mayorista, Pedido *minorista){
+			colaMayorista = new Cola<Pedido*>(); 
+			colaMinorista = new Cola<Pedido*>(); 
+			pendiente = new Cola<Pedido*>();
+			colaMayorista->encolar(mayorista);
+			colaMinorista->encolar(minorista);
+		}
+		//Metodos
+		Cola<Pedido*>* get_colaMayorista(){return colaMayorista;}
+		Cola<Pedido*>* get_colaMinorista(){return colaMinorista;}
+		Cola<Pedido*>* get_colapendiente(){return pendiente;}
+		void imprimirMayorista();
+		void imprimirMinorista();
+		void imprimirPendiente();	
+		void impresionTotal();
+		void agg_Pedido(Pedido*, bool);
+		void agg_PedidoPendiente(Pedido*);
+		Pedido get_pedido();
 };
 
-//FUNCIONES
-
-template <class T> void Cola<T>::encolar(T a)
-{
-    if (!colallena()) {
-        //if (pf == MAX - 2) pf = MAX - 1;
-        pf = (pf + 1) % MAX;
-        Q[pf] = a;
+void ColaPedido::imprimirMayorista(){
+		if(!colaMayorista->colavacia()){
+		Cola<Pedido*> *colaAux = new Cola<Pedido*>();
+		colaAux->concat(colaMayorista-->copy());
+		
+		cout<<"La cola de pedidos mayorista tiene: " <<colaMayorista->size()<<" pedido/s, y son: "<<endl<<endl;
+         while (!colaAux->colavacia()) {
+        colaAux->tope()->impresion();
+        colaAux->desencolar();
     }
-    else cout << "Cola llena" << endl;
-}
+    delete colaAux;
+		cout<<endl;
+	}
 
-template <class T> void Cola<T>::desencolar(void)
-{
-    if (!colavacia())pi = (pi + 1) % MAX;
-    else cout << "Cola vacia" << endl;
-}
 
-template <class T> T Cola<T>::ultimo(void)
-{
-    return Q[pf];
 }
-template <class T> string Cola<T>::imprimir(string s)
-{
-    if (!colavacia()) {
-       for (int i = pi; i != (pf + 1) % MAX; i = (i + 1) % MAX)
-            cout << Q[i] << "--";
+void ColaPedido::imprimirMinorista(){
+		if(!colaMenor->colavacia()){
+		Cola<Pedido*> *colaAux = new Cola<Pedido*>();
+		colaAux->concat(colaMenor->copy());
+
+		cout<<"La cola de pedidos minorista tiene: " <<colaMenor->size()<<" pedido/s, y son: "<<endl<<endl;
+         while (!colaAux->colavacia()) {
+        colaAux->tope()->impresion();
+        colaAux->desencolar();
     }
+    delete colaAux;
+		cout<<endl;
+	}
+}
+void ColaPedido::imprimirPendiente(){
+		if(!pendiente->colavacia()){
+		Cola<Pedido*> *colaAux = new Cola<Pedido*>();
+		colaAux->concat(pendiente->copy());
 
-    return " <<< Q";
+		cout<<"La cola de pedidos que no se pudieron realizar " <<pendiente->size()<<" pedido/s, y son: "<<endl<<endl;
+         while (!colaAux->colavacia()) {
+        colaAux->tope()->impresion();
+        colaAux->desencolar();
+    }
+    delete colaAux;
+		cout<<endl;
+	}
+
+}
+void ColaPedido::impresionTotal(){
+
+    imprimirMayorista();
+    cout<<endl;
+
+    imprimirMinorista();
+    cout<<endl;
+
+    imprimirPendiente();
+    cout<<endl;
+
+}
+void ColaPedido::agg_Pedido(Pedido *p, bool mayorista){
+	if(mayorista == true){
+		colaMayorista->encolar(p);
+	}
+	else{
+		colaMinorista->encolar(p);
+	}
 }
 
-//***************FIN CLASE COLA************************
+void ColaPedido::agregarPedidoPendiente(Pedido *p){
+	pendiente->encolar(p);
+}
+
+//*************** FIN CLASE COLA ************************
 
 
 int main(){
-    int cantidadDePedidos;
-    
- cout << "Ingrese la cantidad de pedidos del día: " ; cin >> cantidadDePedidos ; cout<<endl;
- Pedido pedidos[cantidadDePedidos]={Pedido()};
- 
-    for(int i=0;i<cantidadDePedidos;i++){
-           cout << endl;
-    
-    }
-
- GestorDePedidos gestor;
-gestor.listaPedidos(pedidos, cantidadDePedidos);
-
- cout << "Pedidos Mayoristas: " << endl;
- cout << "Pedidos Minoristas: "<< endl;
-
+ //poner pedidos que se me canten
 }
