@@ -3,7 +3,7 @@
 #include <stack>
 
 using namespace std;
-#include 
+
 template<class Fruta> class Nodo{
     private:
         Fruta fruta;
@@ -20,8 +20,8 @@ class Cajon: public Fruta{
         int ID;
         int CANT_FRUTA;
         string TIPO_FRUTA;
-        bool cantidadCajones[10];
         bool LLENO;
+
     public:
         Cajon(){
             czo = new Nodo<Fruta>();  
@@ -32,64 +32,92 @@ class Cajon: public Fruta{
          }
          //Setters
          void setTipoFruta(string s);
-         void setCajonesDisponibles();
+         void setCajonLleno();
          void setID(int i);
          //Getters
          string getTipoFruta();
-         //Funciones
-         void comprobarEspacioLibre(Fruta f);         
-         void agregarFruta(Fruta f);
-         bool EstaLleno();
+         int getID();
+         int getCantidadFrutaCajon();
+
+         //Funciones       
+         void agregarNodo();
+         int llenarCajon(Fruta f);
+         void agregarFrutas(Fruta f, int CANTIDAD_ACTUAL);
+         bool comprobarEspacioLibre(Fruta f, int CANTIDAD_ACTUAL);  
          void divCajones(Fruta f);
 };
-void Cajon::setCajonesDisponibles(){
-    //plantear recursividad hasta obtener el primer bool LLENO = false en la posicion i.
-    if(!LLENO){
-        int i = 0;
-        setID(i);
-    }
-}
-void Cajon::setID(int i){
-    ID = i;
-}
+
 void Cajon::setTipoFruta(string s){
     TIPO_FRUTA = s;    
 }
+
+void Cajon::setCajonLleno(){
+    LLENO = true;
+}
+
+void Cajon::setID(int i){
+    ID = i;
+}
+
 string Cajon::getTipoFruta(){
     return TIPO_FRUTA;
 }
-void Cajon::agregarFruta(Fruta f){
-    Nodo<Fruta>* nueva = new Nodo<Fruta>(f);
-    nueva->setnext(czo);
-    czo = nueva;
-    CANT_FRUTA++;
-    setTipoFruta(f.getFruta());
-    if(CANT_FRUTA == 20){LLENO = true;}        
+
+int Cajon::getID(){
+    return ID;
 }
-void Cajon::comprobarEspacioLibre(Fruta f){
-    if(CANT_FRUTA<20){
-        agregarFruta(f);
+
+int Cajon::getCantidadFrutaCajon(){
+    return CANT_FRUTA;
+}
+
+void Cajon::agregarNodo(){
+        Nodo<Fruta>* nueva = new Nodo<Fruta>(f);
+        nueva->setnext(czo);
+        czo = nueva;
+        CANT_FRUTA++;
+}
+int Cajon::llenarCajon(Fruta f){
+    int resto = 0;
+    int frutaAgregar = ((20- CANT_FRUTA) / f.getCantFruta());
+    for(int i= 0; i<frutaAgregar; i++){
+        agregarNodo();
+        CANT_FRUTA++;
+    }
+    setTipoFruta(f.getFruta());
+    if (CANT_FRUTA ==20){setCajonLleno();}
+    resto = f.getCantFruta() - frutaAgregar;
+    return resto;
+}
+void Cajon::agregarFrutas(Fruta f, int CANTIDAD_ACTUAL){
+    if(comprobarEspacioLibre(f, CANTIDAD_ACTUAL)){
+        int cajones, residual = divCajones(f);
+        for(int i=0; i==cajones ; i++){
+            llenarCajon(f);
+        }
+    }
+    else {
+        cout<<"No hay espacio disponible en los cajones para guardar "<<f.getCantFruta()<<endl;
     }
 }
-bool Cajon::EstaLleno(){
-        return LLENO;
+
+bool Cajon::comprobarEspacioLibre(Fruta f,int CANT){
+    if((i+f.getCantFruta())<200){
+        agregarFrutas(f);
+    }
+
+    else{
+
+    }
 }
-
- void Cajon::divCajones(Fruta f){
-//     int cajones,n,residual; 
-//     int n = f.getCantFruta();
-//     if(n>20){
-//         n=n-20;
-//         cajones++;
-//         divCajones();
-//     }     
-//     else if (n==20){
-//         n=n-20;
-//         cajones++;      
-//     }
-//     else {
-//         residual=n;
-//     }
-//         cout<<"Cajones Necesarios: "<<cajones<<" + residual"<<n;
-
-     }
+void Cajon::divCajones(Fruta f){
+    int cajones, residual =0;
+    int n;
+    int n = f.getCantFruta();
+    while(n>20){
+        n=n-20;
+        cajones++;
+    }     
+    residual=n;
+    cout<<"Cajones Necesarios: "<<cajones<<" + residual"<<n;
+}
