@@ -129,12 +129,12 @@ void Pedido::imprimirPedido(){
     
     void GestorDePedidos::gestion_minorista(){
       	Pedido *aux2  = COLA_PEDIDOS->get_colaMinorista()->tope();
-	int fruta = 0;
+    	string fruta = " ";
 	
-	//le asigno numeros a las frutas para ver cual es la que necesito para sacar de stock 
-	if(aux2->getTipoFruta() == "Banana"){fruta = 1;} 
-	if(aux2->getTipoFruta() == "Frutilla"){fruta = 2;}
-	if(aux2->getTipoFruta() == "Mandarina"){fruta = 3;}
+	//le asigno numeros a las frutas para ver cual es la que necesito para sacar de stock (lo hago individual)
+	if(aux2->getTipoFruta() == "Banana"){fruta = "Banana";} 
+	if(aux2->getTipoFruta() == "Frutilla"){fruta = "Frutilla";}
+	if(aux2->getTipoFruta() == "Mandarina"){fruta = "Mandarina";}
       
       if(STOCK->metodo para vero la Cantidad de frutas > aux2->getcantidadFruta()){
           cout<<"-Realizo venta minorista-" << endl ;
