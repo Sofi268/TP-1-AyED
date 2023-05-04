@@ -3,12 +3,11 @@ class Fruta {
         const int PESO_MAX= 200;
         int CANTIDAD ;
         string NOMBRE;
-        string frutasPosibles[3];
+        string frutasPosibles[3]={"mandarina", "frutilla", "banana"};
     public:
         Fruta(){
             NOMBRE = "";
             CANTIDAD = 0;
-            frutasPosibles={"mandarina", "frutilla", "banana"};
         }
         
         //SETTERS
