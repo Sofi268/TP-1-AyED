@@ -1,15 +1,29 @@
 int main(){
     Fruta f;
     int CANTIDAD_ACTUAL=0; //Hay que acordarse de sumar cada vez que metemos fruta al cajon y restarle cuando vaciamos.
-    f.setCantFruta();
-    Cajon Cajones[10];
+
+    Cajon c;
+    Cajon cajones[10];
     for (int i=0; i<10; i++){
-        Cajones[i].setID(i);
+        cajones[i].setID(i);
     }
     int k=1;
     int i;
-    while (k>0&&Cajones[i].LLENO!=true){
-        k= Cajones[i].agregarFrutas;
+    //Proceso para llenar los cajones con la fruta
+    
+    f.setFruta();
+    f.setCantFruta();
+    //Obtiene la posicion del cajon disponible, si es que hay
+    i = c.cajonDisponible(Cajon cajones[]);
+    //Procede a llenarlo y a los siguientes ya que se va llenando en orden
+    if(i>0){
+        while(k>0&&i>0&&i<10){
+            int a= cajones[i].getCantFruta();
+            int b;
+            k= cajones[i].agregarFrutas(f,CANTIDAD_ACTUAL);
+            b= cajones[i].getCantFruta();
+            CANTIDAD_ACTUAL += cajones[i].frutaAgregada(b,a);
+        }
     }
     
 }
