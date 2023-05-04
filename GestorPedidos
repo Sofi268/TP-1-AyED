@@ -87,7 +87,7 @@ void Pedido::imprimirPedido(){
      
     void gestion_Mayorista();
     void gestion_minorista();
-    void gestor(bool);
+    void gestor(bool); //era para ver la prioridad al mayorista
    
 
     private:
@@ -131,29 +131,44 @@ void Pedido::imprimirPedido(){
       	Pedido *aux2  = COLA_PEDIDOS->get_colaMinorista()->tope();
     	string fruta = " ";
 	
-	//le asigno numeros a las frutas para ver cual es la que necesito para sacar de stock (lo hago individual)
-	if(aux2->getTipoFruta() == "Banana"){fruta = "Banana";} 
-	if(aux2->getTipoFruta() == "Frutilla"){fruta = "Frutilla";}
-	if(aux2->getTipoFruta() == "Mandarina"){fruta = "Mandarina";}
-      
-      if(STOCK->metodo para vero la Cantidad de frutas > aux2->getcantidadFruta()){
+	//Me fijo que tipo de fruta consulto el stock y si hay elimino la fruta que necesito
+	if(aux2->getTipoFruta() == "Banana"){ 
+	    
+	    if(STOCK->getBananaTotal() > aux2->getcantidadFruta()){
           cout<<"-Realizo venta minorista-" << endl ;
-          //saco la fruta de stock
-      }else{//si no me alcanza la fruta que tengo en stock lo mando a pendientes
+          STOCK->disminuirStock(Banana, aux2->getcantidadFruta() )
+        }else{//si no me alcanza la fruta que tengo en stock lo mando a pendientes
       
-            cout << "La cantidad solicitada no esta disponible, estara en espera" << endl;M
+            cout << "La cantidad solicitada no esta disponible, estara en espera" << endl;
             COLA_PEDIDOS->agregarPedidoPendiente(aux2);
-      }
+        } 
+	}  
+	if(aux2->getTipoFruta() == "Frutilla"){
+	    
+	    if(STOCK->getFrutillaTotal() > aux2->getcantidadFruta()){
+          cout<<"-Realizo venta minorista-" << endl ;
+          STOCK->disminuirStock(Frutilla, aux2->getcantidadFruta() )
+        }else{//si no me alcanza la fruta que tengo en stock lo mando a pendientes
       
+            cout << "La cantidad solicitada no esta disponible, estara en espera" << endl;
+            COLA_PEDIDOS->agregarPedidoPendiente(aux2);
+        } 
+	}
+	if(aux2->getTipoFruta() == "Mandarina"){
+	    
+	       if(STOCK->getMandarinaTotal() > aux2->getcantidadFruta()){
+          cout<<"-Realizo venta minorista-" << endl ;
+         STOCK->disminuirStock(Mandarina, aux2->getcantidadFruta() )
+        }else{//si no me alcanza la fruta que tengo en stock lo mando a pendientes
+      
+            cout << "La cantidad solicitada no esta disponible, estara en espera" << endl;
+            COLA_PEDIDOS->agregarPedidoPendiente(aux2);
+        } 
+	}
+    
     }
 
-    void GestorDePedidos::gestion(){
-      
-    }
  
-
-
-
 
 //************FIN CLASE GestorDePedidos******************************
 
@@ -174,7 +189,7 @@ class ColaGestorDePedidos{
 			colaMayorista->encolar(mayorista);
 			colaMinorista->encolar(minorista);
 		}
-		//Metodos
+		//FUNCIONES
 		Cola<Pedido*>* get_colaMayorista(){return colaMayorista;}
 		Cola<Pedido*>* get_colaMinorista(){return colaMinorista;}
 		Cola<Pedido*>* get_colapendiente(){return pendiente;}
@@ -261,5 +276,40 @@ void ColaPedido::agregarPedidoPendiente(Pedido *p){
 
 
 int main(){
- //poner pedidos que se me canten
+ //tomo PEDIDOS
+     ColaGestorDePedidos cola = new ColaGestorDePedidos();
+     Pedido uno = new Pedido("Person0", "Banana", 9,0);
+     Pedido dos = new Pedido("Person1","Banana",3,0);
+     Pedido tres = new Pedido("Person2","Frutilla",3 ,1);
+     Pedido cuatro = new Pedido("Person3","Mandarina",7,0);
+     Pedido cinco = new Pedido("Person4","Banana",2,1);
+     Pedido seis = new Pedido("Person5","Mandarina",6,0);
+     Pedido siete = new Pedido("Person6","Frutilla",4,0);
+     Pedido ocho = new Pedido("Person7","Frutilla",2,1);
+     Pedido nueve = new Pedido("Person8","Mandarina",3,1);
+     Pedido diez = new Pedido("Person9","Mandarina",9,0);
+     cola->agregarPedido(uno, uno->getEsMayorista());
+     cola->agregarPedido(dos, dos->getEsMayorista());
+     cola->agregarPedido(tres, tres->getEsMayorista());
+     cola->agregarPedido(cuatro, cuatro->getEsMayorista());
+     cola->agregarPedido(cinco, cinco->getEsMayorista());
+     cola->agregarPedido(seis, seis->getEsMayorista());
+     cola->agregarPedido(siete, siete->getEsMayorista());
+     cola->agregarPedido(ocho, ocho->getEsMayorista());
+     cola->agregarPedido(ocho, nueve->getEsMayorista());
+     cola->agregarPedido(ocho, diez->getEsMayorista());
+     
+//Imprimo todos los PEDIDOS
+    cola->impresionTotal();
+// realizo PEDIDOS
+    GestorDePedidos *gestor = new GestorDePedidos(STOCK,cola); 
+    cout << "Pedidos mayoristas ya entregados" ;
+    cola -> imprimirMayorista();
+    cout << "Pedidos minoristas ya entregados" ; 
+    cola -> imprimirMinorista();
+    cout << "Pedidos en espera" ;
+    cola -> imprimirPendiente();
+    cout << endl;
+  
+  
 }
