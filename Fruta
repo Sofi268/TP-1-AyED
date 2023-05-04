@@ -1,81 +1,67 @@
-#include <iostream>
-#include <sstream>
-#include <stdlib.h>
-#include <vector>
-using namespace std;
-
-class Fruta{
-public:
-    //CONSTRUCTOR-DESTRUCTOR
-    Fruta();
-    ~Fruta();
-    //SETTERS
-    void setFruta(string);
-    void setCantFruta(int);
-    
-    //GETTERS
-    string getFruta();
-    int getCantFruta();
-    //FUNCIONES
-    void disminuirFruta();
-    void disminuirFruta_Cajon();
-    void aumentarFruta();
-
-private:
-int PESO=0,CANTIDAD=0;
-const int PESO_MAX=200;
-string NOMBRE;
-
+class Fruta {
+    private:
+        const int PESO_MAX= 200;
+        int CANTIDAD ;
+        string NOMBRE;
+    public:
+        Fruta(){
+            NOMBRE = "";
+            CANTIDAD = 0;
+        }
+        
+        //SETTERS
+        void setFruta();
+        void setCantFruta();
+        //GETTERS
+        string getFruta(){return NOMBRE;};
+        int getCantFruta(){return CANTIDAD;};
 };
-//CONSTRUCTOR-DESTRUCTOR    
-Fruta::Fruta(){
-    string nombre;int cantidad=0;
-    cout<<"Ingresar la fruta: ";cin>>nombre;
-    cout<<"Ingresar la cantidad de Fruta en kg: ";cin>>cantidad;cout<<endl;
-    setFruta(nombre);setCantFruta(cantidad);
+void Fruta::setFruta(){
+    string nombre;
+    cout<<"Ingresar la fruta: ";
+    cin>>nombre;
+    bool igual= false;
+    for(int i= 0; i<3; i++){
+        if (frutasPosibles[i]==nombre){
+            igual = true;
+        }
+    }
+    if(igual){
+        NOMBRE=nombre;
+    }
+    else{
+        while(!igual){
+        cout<<"La fruta ingresada no es valida, por favor, ingrese un tipo de fruta permitida: "<<endl;
+        cin>> nombre; 
+            for(int i= 0; i<3; i++){
+                if (frutasPosibles[i]==nombre){
+                        igual = true;
+                }
+            }
+        }
+        NOMBRE=nombre;
+    }
 }
-Fruta::~Fruta(){cout<<"\nDestructor";}
-//SETTERS
-void Fruta::setFruta(string nombre){NOMBRE=nombre;}
-void Fruta::setCantFruta(int cant){
+void Fruta::setCantFruta(){
+    int cant = 0;
+    bool f = false;
     int n;
-    if(cant<=PESO_MAX&&cant>0){CANTIDAD=cant;}
+    cout<<"Ingresar la cantidad de Fruta en kg: ";
+    cin>>cant;cout<<endl;
+    if(cant<=PESO_MAX&&cant>0){
+        CANTIDAD=cant;
+    }
     else{
+        while(!f){
         cout<<"La cantidad de fruta no debe ser superior a 200KG.\nIngresar nuevo valor: "; cin>>n;
-        setCantFruta(n);}
+            if(n<=PESO_MAX&&n>0){ f=true;}
+            if(n==200){
+            cout<<"Se supero el limite de fruta disponible para ingresar"<<endl;
+            break;
+        }
+        CANTIDAD = n;
+        }   
     }
-
-//GETTERS
-    string  Fruta::getFruta(){return NOMBRE;}
-    int Fruta::getCantFruta(){return CANTIDAD;}
-
-
-//FUNCIONES:
-void Fruta::disminuirFruta_Cajon(){
-int aux,cajones;
-cout<<"Cuantos cajones se vendieron? "; cin>>cajones;
-aux=CANTIDAD-20*cajones;
-if(aux==0){CANTIDAD=aux; cout<<"\nEXISTENCIAS VACIAS, REPONER"<<endl;}
-else if(aux<0)cout<<"\nENTREGA PENDIENTE, REPONER"<<endl;
-else CANTIDAD=aux;
 }
-void Fruta::aumentarFruta(){
-    int cant, aux; 
-    cout<<"Cuantos kg se compraron?: ";cin>>cant;
-    aux=CANTIDAD+cant;
-    if(aux<=200) CANTIDAD=aux;
-    else{
-        cout<<"El total almacenable no puede ser superior a 200KG"<<endl;
-        aumentarFruta();
-    }
-
-}
-void Fruta::disminuirFruta(){
-    int aux,kgFruta;
-    cout<<"Cuantos kg de fruta se vendieron? "; cin>>kgFruta;
-    aux=CANTIDAD-kgFruta;
-    if(aux==0){CANTIDAD=aux; cout<<"\nEXISTENCIAS VACIAS, REPONER"<<endl;}
-    else if(aux<0)cout<<"\nENTREGA PENDIENTE, REPONER"<<endl;
-    else CANTIDAD=aux;
-
-}
+string Fruta::getFruta(){return NOMBRE;};
+int Fruta::getCantFruta(){return CANTIDAD;};
