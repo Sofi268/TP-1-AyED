@@ -1,1 +1,157 @@
 
+#include <iostream>
+#include <sstream>
+#include <stdlib.h>
+#include <vector>
+#include <string.h>
+using namespace std;
+//************************************************************************************************************
+
+class Stock{
+public:
+    //CONSTRUCTOR-DESTRUCTOR
+    Stock(int, int, int);
+    ~Stock();
+    //SETTERS
+        void setBananaTotal(int);
+        void setFrutillaTotal(int);
+        void setMandarinaTotal(int);
+        void setStock();
+    
+    //GETTERS   
+        int getBananaTotal();
+        int getFrutillaTotal();
+        int getMandarinaTotal();
+
+    //FUNCIONES
+    void imprimirStock();
+    void incrementarStock(string, int);
+    void disminuirStock(string, int);
+   
+private:
+        int FRUTILLAS,MANDARINAS,BANANAS;
+        int FRUTILLAS_FALTANTES,MANDARINAS_FALTANTES,BANANAS_FALTANTES;
+        const int CANTMAX=200;
+};
+
+    //CONSTRUCTOR-DESTRUCTOR
+    Stock::Stock(int B,int F, int M){
+        FRUTILLAS=0,MANDARINAS=0,BANANAS=0;
+        FRUTILLAS_FALTANTES=0,MANDARINAS_FALTANTES=0,BANANAS_FALTANTES=0;
+        setBananaTotal(B);
+        setMandarinaTotal(M);
+        setFrutillaTotal(F);
+    }
+    Stock::~Stock(){}
+    //SETTERS
+    void Stock::setBananaTotal(int B){
+        int b;
+        if(B<CANTMAX){BANANAS=B;}
+        else{cout<<"\nERROR\nIngresar nuevo valor de bananas: ";cin>>b;
+        setBananaTotal(b);}
+    }
+    void Stock::setFrutillaTotal(int F){
+        int f;
+        if(F<CANTMAX){FRUTILLAS=F;}
+        else{cout<<"\nERROR\nIngresar nuevo valor de frutillas: ";cin>>f;
+        setFrutillaTotal(f);}
+    }
+    void Stock::setMandarinaTotal(int M){
+        int m;
+        if(M<CANTMAX){MANDARINAS=M;}
+        else{cout<<"\nERROR\nIngresar nuevo valor de mandarinas: ";cin>>m;
+        setMandarinaTotal(m);}
+    }
+    //GETTERS
+    int Stock::getBananaTotal(){return BANANAS;}
+    int Stock::getFrutillaTotal(){return FRUTILLAS;}
+    int Stock::getMandarinaTotal(){return MANDARINAS;}
+
+    //FUNCIONES
+    void Stock::imprimirStock(){    //FALTA VER EN CANTIDAD DE CAJONES
+        cout<<"\nSe tiene una cantidad de "<<getBananaTotal()<<" Bananas"<<endl;
+        cout<<"Se tiene una cantidad de "<<getMandarinaTotal()<<" Mandarinas"<<endl;
+        cout<<"Se tiene una cantidad de "<<getFrutillaTotal()<<" Frutillas"<<endl;
+    }
+    void Stock::incrementarStock(string Fruta, int Cantidad){
+        int aux=0;
+        if(Fruta=="Mandarina"||Fruta=="mandarina"||Fruta=="MANDARINA"){
+            aux=MANDARINAS+Cantidad;
+            if(aux<=CANTMAX){MANDARINAS=aux;}
+            else cout<<"\nLa cantidad de mandarinas que se quiere aumentar supera el limite";
+        }
+        else if(Fruta=="Banana"||Fruta=="banana"||Fruta=="BANANA"){
+            aux=BANANAS+Cantidad;
+            if(aux<=CANTMAX){BANANAS=aux;}
+            else cout<<"\nLa cantidad de bananas que se quiere aumentar supera el limite";
+        }
+        else if(Fruta=="Frutilla"||Fruta=="frutilla"||Fruta=="FRUTILLA"){
+            aux=FRUTILLAS+Cantidad;
+            if(aux<=CANTMAX){FRUTILLAS=aux;}
+            else cout<<"\nLa cantidad de frutillas que se quiere aumentar supera el limite";
+       }
+        else cout<<"Algo ingresaste mal, pibe";
+
+    }
+    void Stock::disminuirStock(string Fruta, int Cantidad){
+        int aux=0;
+        if(Fruta=="Mandarina"||Fruta=="mandarina"||Fruta=="MANDARINA"){
+            aux=MANDARINAS-Cantidad;
+            if(aux>=0){MANDARINAS=aux;}
+            else {MANDARINAS=0;aux*=-1;cout<<"\nHay un faltante de "<<aux<<" mandarina/s";MANDARINAS_FALTANTES=aux;}
+        }
+        else if(Fruta=="Banana"||Fruta=="banana"||Fruta=="BANANA"){
+            aux=BANANAS-Cantidad;
+            if(aux>=0){BANANAS=aux;}
+            else {BANANAS=0;aux*=-1;cout<<"\nHay un faltante de "<<aux<<" bananas/s";BANANAS_FALTANTES=aux;}
+        }
+        else if(Fruta=="Frutilla"||Fruta=="frutilla"||Fruta=="FRUTILLA"){
+            aux=FRUTILLAS-Cantidad;
+            if(aux>=0){FRUTILLAS=aux;}
+            else {FRUTILLAS=0;aux*=-1;cout<<"\nHay un faltante de "<<aux<<" frutillas/s";FRUTILLAS_FALTANTES=aux;}
+       }
+        else cout<<"Algo ingresaste mal pibe";
+
+    }
+    
+    
+
+
+
+//FUNCION PRINCIPAL:
+int main(){
+    int b,f,m;
+    int incBan,incFrut,incMand,disBan,disFrut,disMand;
+    cout<<"Ingresar bananas: ";cin>>b;
+    cout<<"Ingresar frutillas: ";cin>>f;
+    cout<<"Ingresar mandarinas: ";cin>>m;
+
+  Stock stock1(b,f,m);
+  stock1.imprimirStock();
+
+    //LO DE COMPRA-VENTA DEBERIA SER POR PEDIDO
+  cout<<"\nSe compro mercaderia nueva\n"<<endl<<"De bananas se compraron: ";cin>>incBan; 
+  cout<<"De frutillas se compraron: ";cin>>incFrut;
+  cout<<"De mandarinas se compraron: ";cin>>incMand;
+    
+    stock1.incrementarStock("banana",incBan);
+    stock1.incrementarStock("mandarina",incMand);
+    stock1.incrementarStock("frutilla",incFrut);
+
+cout<<"\nStock despues de comprar mercaderia\n";
+stock1.imprimirStock();
+
+//LO DE COMPRA-VENTA DEBERIA SER POR PEDIDO
+cout<<"\nSe vende mercaderia\n"<<endl<<"De bananas se vendieron: ";cin>>disBan;
+cout<<"De frutillas se vendieron: ";cin>>disFrut;       
+cout<<"De mandarinas se vendieron: ";cin>>disMand;
+
+stock1.disminuirStock("banana",disBan);
+stock1.disminuirStock("frutilla",disFrut);
+stock1.disminuirStock("mandarina",disMand);
+
+  stock1.imprimirStock();
+    cout<<endl<<endl<<stock1.getBananaTotal();
+    
+// system("pause");
+}
