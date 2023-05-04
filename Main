@@ -1,5 +1,5 @@
 int main(){
-    Fruta f;
+    Fruta f,u;
     int CANTIDAD_ACTUAL=0; //Hay que acordarse de sumar cada vez que metemos fruta al cajon y restarle cuando vaciamos.
 
     Cajon c;
@@ -9,6 +9,7 @@ int main(){
     }
     int k=1;
     int i;
+    int l;
     //Proceso para llenar los cajones con la fruta
     
     f.setFruta();
@@ -25,5 +26,14 @@ int main(){
             CANTIDAD_ACTUAL += cajones[i].frutaAgregada(b,a);
         }
     }
+    //Proceso para vaciar los cajones con la fruta
+    l= c.cajonDisponible(Cajon cajones[]);
+            while(k>0&&i>0&&i<10){
+            int a= cajones[i].getCantFruta();
+            int b;
+            k= cajones[i].vaciarCajon(f,CANTIDAD_ACTUAL);
+            b= cajones[i].getCantFruta();
+            CANTIDAD_ACTUAL -= cajones[i].frutaAgregada(a,b);
+        }
     
 }
