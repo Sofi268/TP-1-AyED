@@ -57,7 +57,6 @@ template <class Fruta> class Cajon: public Fruta{
          bool comprobarEspacioLibre(Fruta f, int CANTIDAD_ACTUAL);  
          bool esvacia(void);
          Cajon* restoCajon(void);
-         int vaciarCajon(Fruta f);
          int frutaAgregada(int a, int b);
          int cajonDisponible(Cajon cajones[]);
 };
