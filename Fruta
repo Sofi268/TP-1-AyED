@@ -1,7 +1,6 @@
 class Fruta {
     private:
         const int PESO_MAX= 200;
-        int CANTIDAD_ACTUAL;
         int PESO;
         int CANTIDAD ;
         string NOMBRE;
@@ -10,41 +9,41 @@ class Fruta {
             NOMBRE = "";
             PESO = 0;
             CANTIDAD = 0;
-            CANTIDAD_ACTUAL = 0;
         }
         
         //SETTERS
-        void setFruta(){
-            string nombre;
-            cout<<"Ingresar la fruta: ";
-            cin>>nombre;
-            NOMBRE=nombre;
-        }
-        void setCantFruta(){
-            int cant = 0;
-            bool f = false;
-            int n;
-            cout<<"Ingresar la cantidad de Fruta en kg: ";
-            cin>>cant;cout<<endl;
-            if((cant+CANTIDAD_ACTUAL)<=PESO_MAX&&cant>0){
-                CANTIDAD=cant;
-                CANTIDAD_ACTUAL+=cant;
-            }
-            else{
-                while(!f){
-                cout<<"La cantidad de fruta no debe ser superior a 200KG.\nIngresar nuevo valor: "; cin>>n;
-                    if((n+CANTIDAD_ACTUAL)<=PESO_MAX&&n>0){ f=true;}
-                    if(CANTIDAD_ACTUAL==200){
-                    cout<<"Se supero el limite de fruta disponible para ingresar"<<endl;
-                    break;
-                }
-                CANTIDAD = n;
-                CANTIDAD_ACTUAL+=cant;
-            }
-        }
-        
+        void setFruta();
+        void setCantFruta();
         //GETTERS
-        string getFruta(){return NOMBRE;}
-        int getCantFruta(){return CANTIDAD;}
-        int getCantidadTotalActual(){return CANTIDAD_ACTUAL;}
+        string getFruta(){return NOMBRE;};
+        int getCantFruta(){return CANTIDAD;};
 };
+void Fruta::setFruta(){
+    string nombre;
+    cout<<"Ingresar la fruta: ";
+    cin>>nombre;
+    NOMBRE=nombre;
+}
+void Fruta::setCantFruta(){
+    int cant = 0;
+    bool f = false;
+    int n;
+    cout<<"Ingresar la cantidad de Fruta en kg: ";
+    cin>>cant;cout<<endl;
+    if(cant<=PESO_MAX&&cant>0){
+        CANTIDAD=cant;
+    }
+    else{
+        while(!f){
+        cout<<"La cantidad de fruta no debe ser superior a 200KG.\nIngresar nuevo valor: "; cin>>n;
+            if(n<=PESO_MAX&&n>0){ f=true;}
+            if(n==200){
+            cout<<"Se supero el limite de fruta disponible para ingresar"<<endl;
+            break;
+        }
+        CANTIDAD = n;
+        }   
+    }
+}
+string Fruta::getFruta(){return NOMBRE;};
+int Fruta::getCantFruta(){return CANTIDAD;};
