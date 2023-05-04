@@ -1,11 +1,15 @@
-//FUNCION PRINCIPAL:
 int main(){
-    Fruta fruta;
-    int CANTIDAD_TOTAL_FRUTA = 0;
-    
-    while(CANTIDAD_TOTAL_FRUTA<200){
-        fruta.setFruta();
-        fruta.setCantFruta();
-        CANTIDAD_TOTAL_FRUTA = fruta.getCantidadTotalActual();  
+    Fruta f;
+    int CANTIDAD_ACTUAL=0; //Hay que acordarse de sumar cada vez que metemos fruta al cajon y restarle cuando vaciamos.
+    f.setCantFruta();
+    Cajon Cajones[10];
+    for (int i=0; i<10; i++){
+        Cajones[i].setID(i);
     }
+    int k=1;
+    int i;
+    while (k>0&&Cajones[i].LLENO!=true){
+        k= Cajones[i].agregarFrutas;
+    }
+    
 }
